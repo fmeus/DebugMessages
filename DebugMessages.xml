@@ -1,0 +1,413 @@
+<!--
+  Revision: $Id: DebugMessages.xml 772 2013-02-05 15:32:54Z fmeus_lgs $
+-->
+<Ui xmlns="http://www.blizzard.com/wow/ui/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.blizzard.com/wow/ui/..\..\FrameXML\UI.xsd">
+
+<!-- Dialog template -->
+    <Frame name="DebugMessages_Dialog" hidden="true" virtual="true" frameStrata="DIALOG" parent="UIParent">
+        <Size>
+            <AbsDimension x="700" y="395"/>
+        </Size>
+        <Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+            <BackgroundInsets>
+                <AbsInset left="11" right="12" top="12" bottom="11"/>
+            </BackgroundInsets>
+            <TileSize>
+                <AbsValue val="32"/>
+            </TileSize>
+            <EdgeSize>
+                <AbsValue val="32"/>
+            </EdgeSize>
+        </Backdrop>
+        <Anchors>
+            <Anchor point="CENTER"/>
+        </Anchors>
+        <Scripts>
+            <OnMouseDown>self:StartMoving();</OnMouseDown>
+            <OnMouseUp>self:StopMovingOrSizing();</OnMouseUp>
+            <OnDragStop>self:StopMovingOrSizing();</OnDragStop>
+        </Scripts>
+    </Frame>
+
+<!-- Template button for debug messages -->
+    <Button name="DebugMessage_Template" virtual="true">
+        <Size><AbsDimension x="650" y="12"/></Size>
+        <Layers>
+            <Layer level="BACKGROUND">
+                <Texture name="$parentBG">
+                    <Color r="0.2" g="0.2" b="0.2" a=".5"/>
+                    <Anchors>
+                        <Anchor point="TOPLEFT">
+                            <Offset x="0" y="0"/>
+                        </Anchor>
+                        <Anchor point="BOTTOMRIGHT">
+                            <Offset x="0" y="0"/>
+                        </Anchor>
+                    </Anchors>
+
+                    <Size><AbsDimension x="640" y="12"/></Size>
+                </Texture>
+            </Layer>
+        </Layers>
+        <Frames>
+            <Frame name="$parentInfo" setAllPoints="true">
+                <Layers>
+                    <Layer level="BORDER">
+                        <FontString name="$parentTime" inherits="GameFontNormalSmall" justifyH="LEFT">
+                            <Anchors>
+                                <Anchor point="TOPLEFT">
+                                    <Offset><AbsDimension x="10" y="0"/></Offset>
+                                </Anchor>
+                            </Anchors>
+                            <Size>
+                                <AbsDimension x="60" y="12"/>
+                            </Size>
+                        </FontString> 
+                        <FontString name="$parentAddOn" inherits="GameFontNormalSmall" justifyH="LEFT">
+                            <Anchors>
+                                <Anchor point="TOPLEFT" relativeTo="$parentTime" relativePoint="TOPRIGHT">
+                                    <Offset><AbsDimension x="5" y="0"/></Offset>
+                                </Anchor>
+                            </Anchors>
+                            <Size>
+                                <AbsDimension x="100" y="12"/>
+                            </Size>
+                        </FontString> 
+                        <FontString name="$parentMessage" inherits="GameFontNormalSmall" justifyH="LEFT" justifyV="TOP">
+                            <Anchors>
+                                <Anchor point="TOPLEFT" relativeTo="$parentAddOn" relativePoint="TOPRIGHT">
+                                    <Offset><AbsDimension x="5" y="0"/></Offset>
+                                </Anchor>
+                            </Anchors>
+                            <Size>
+                                <AbsDimension x="480" y="12"/>
+                            </Size>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Frame>
+        </Frames>
+        <Scripts>
+            <OnEnter></OnEnter>
+            <OnLeave></OnLeave>
+        </Scripts>
+        <HighlightTexture file="Interface\QuestFrame\UI-QuestTitleHighlight" alphaMode="ADD"/>
+    </Button>
+
+<!-- Main DebugMessages frame -->
+    <Frame name="DebugMessagesFrame" hidden="true" parent="UIParent" frameStrata="MEDIUM" inherits="DebugMessages_Dialog" toplevel="true" movable="true" enbaleMouse="true">
+        <Layers>
+            <Layer level="BACKGROUND">
+                <Texture name="$parentTexture">
+                    <Anchors>
+                        <Anchor point="TOPLEFT">
+                            <Offset x="4" y="-4"/>
+                        </Anchor>
+                        <Anchor point="BOTTOMRIGHT">
+                            <Offset x="-4" y="4"/>
+                        </Anchor>
+                    </Anchors>
+                    <Color r="0" g="0" b="0" a="0.5"/>
+                </Texture>
+            </Layer>
+
+            <Layer level="ARTWORK">
+                <!-- Frame title texture/border -->
+                <Texture name="$parentFrameHeader" file="Interface\DialogFrame\UI-DialogBox-Header">
+                    <Size>
+                        <AbsDimension x="400" y="64"/>
+                    </Size>
+                    <Anchors>
+                        <Anchor point="TOP">
+                            <Offset><AbsDimension x="0" y="12"/></Offset>
+                        </Anchor>
+                    </Anchors>
+                </Texture>
+
+                <!-- Frame title -->
+                <FontString name="$parentText" inherits="GameFontNormal" text="DM_FULLNAME">
+                    <Anchors>
+                        <Anchor point="TOP" relativeTo="$parent">
+                            <Offset><AbsDimension x="0" y="-2"/></Offset>
+                        </Anchor>
+                    </Anchors>
+                </FontString>
+
+                <!-- Time header -->
+                <FontString name="Time" inherits="GameFontNormal" text="DM_TIME">
+                    <Anchors>
+                        <Anchor point="TOPLEFT" relativeTo="$parent">
+                            <Offset><AbsDimension x="30" y="-32"/></Offset>
+                        </Anchor>
+                    </Anchors>
+                </FontString>
+
+                <!-- AddOn header -->
+                <FontString name="AddOn" inherits="GameFontNormal" text="DM_ADDON">
+                    <Anchors>
+                        <Anchor point="TOPLEFT" relativeTo="Time" relativePoint="TOPLEFT">
+                            <Offset><AbsDimension x="60" y="0"/></Offset>
+                        </Anchor>
+                    </Anchors>
+                </FontString>
+
+                <!-- Message header -->
+                <FontString name="Message" inherits="GameFontNormal" text="DM_MESSAGE">
+                    <Anchors>
+                        <Anchor point="TOPLEFT" relativeTo="AddOn" relativePoint="TOPLEFT">
+                            <Offset><AbsDimension x="100" y="0"/></Offset>
+                        </Anchor>
+                    </Anchors>
+                </FontString>
+            </Layer>
+        </Layers>
+
+        <Frames>
+            <!-- Scroll area for debug messages -->
+            <Frame name="$parentBorder" enableMouse="true" hidden="false">
+                <Layers>
+                    <Layer level="BACKGROUND">
+                        <Texture name="$parentTexture">
+                            <Size>
+                                <AbsDimension x="665" y="305"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="CENTER"/>
+                            </Anchors>
+                            <Color r="0.1" g="0.1" b="0.1" a="0.5"/>
+                        </Texture>
+                    </Layer>
+                </Layers>
+                <Size>
+                    <AbsDimension x="670" y="310"/>
+                </Size>
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+                        <Offset><AbsDimension x="15" y="-48"/></Offset>
+                    </Anchor>
+                </Anchors>
+                <Backdrop  edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="false">
+                    <BackgroundInsets>
+                        <AbsInset left="5" right="5" top="5" bottom="5"/>
+                    </BackgroundInsets>
+                    <TileSize>
+                        <AbsValue val="16"/>
+                    </TileSize>
+                    <EdgeSize>
+                        <AbsValue val="16"/>
+                    </EdgeSize>
+                </Backdrop>
+
+                <Frames>
+                    <Button name="DebugMessage1" inherits="DebugMessage_Template">
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT" >
+                                <Offset>
+                                    <AbsDimension x="0" y="-5"/>
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                    </Button>
+                    <Button name="DebugMessage2" inherits="DebugMessage_Template">
+                        <Anchors>
+                            <Anchor point="TOP" relativeTo="DebugMessage1" relativePoint="BOTTOM"/>
+                        </Anchors>
+                    </Button>
+                    <Button name="DebugMessage3" inherits="DebugMessage_Template">
+                        <Anchors>
+                            <Anchor point="TOP" relativeTo="DebugMessage2" relativePoint="BOTTOM"/>
+                        </Anchors>
+                    </Button>
+                    <Button name="DebugMessage4" inherits="DebugMessage_Template">
+                        <Anchors>
+                            <Anchor point="TOP" relativeTo="DebugMessage3" relativePoint="BOTTOM"/>
+                        </Anchors>
+                    </Button>
+                    <Button name="DebugMessage5" inherits="DebugMessage_Template">
+                        <Anchors>
+                            <Anchor point="TOP" relativeTo="DebugMessage4" relativePoint="BOTTOM"/>
+                        </Anchors>
+                    </Button>
+                    <Button name="DebugMessage6" inherits="DebugMessage_Template">
+                        <Anchors>
+                            <Anchor point="TOP" relativeTo="DebugMessage5" relativePoint="BOTTOM"/>
+                        </Anchors>
+                    </Button>
+                    <Button name="DebugMessage7" inherits="DebugMessage_Template">
+                        <Anchors>
+                            <Anchor point="TOP" relativeTo="DebugMessage6" relativePoint="BOTTOM"/>
+                        </Anchors>
+                    </Button>
+                    <Button name="DebugMessage8" inherits="DebugMessage_Template">
+                        <Anchors>
+                            <Anchor point="TOP" relativeTo="DebugMessage7" relativePoint="BOTTOM"/>
+                        </Anchors>
+                    </Button>
+                    <Button name="DebugMessage9" inherits="DebugMessage_Template">
+                        <Anchors>
+                            <Anchor point="TOP" relativeTo="DebugMessage8" relativePoint="BOTTOM"/>
+                        </Anchors>
+                    </Button>
+                    <Button name="DebugMessage10" inherits="DebugMessage_Template">
+                        <Anchors>
+                            <Anchor point="TOP" relativeTo="DebugMessage9" relativePoint="BOTTOM"/>
+                        </Anchors>
+                    </Button>
+                    <Button name="DebugMessage11" inherits="DebugMessage_Template">
+                        <Anchors>
+                            <Anchor point="TOP" relativeTo="DebugMessage10" relativePoint="BOTTOM"/>
+                        </Anchors>
+                    </Button>
+                    <Button name="DebugMessage12" inherits="DebugMessage_Template">
+                        <Anchors>
+                            <Anchor point="TOP" relativeTo="DebugMessage11" relativePoint="BOTTOM"/>
+                        </Anchors>
+                    </Button>
+                    <Button name="DebugMessage13" inherits="DebugMessage_Template">
+                        <Anchors>
+                            <Anchor point="TOP" relativeTo="DebugMessage12" relativePoint="BOTTOM"/>
+                        </Anchors>
+                    </Button>
+                    <Button name="DebugMessage14" inherits="DebugMessage_Template">
+                        <Anchors>
+                            <Anchor point="TOP" relativeTo="DebugMessage13" relativePoint="BOTTOM"/>
+                        </Anchors>
+                    </Button>
+                    <Button name="DebugMessage15" inherits="DebugMessage_Template">
+                        <Anchors>
+                            <Anchor point="TOP" relativeTo="DebugMessage14" relativePoint="BOTTOM"/>
+                        </Anchors>
+                    </Button>
+                    <Button name="DebugMessage16" inherits="DebugMessage_Template">
+                        <Anchors>
+                            <Anchor point="TOP" relativeTo="DebugMessage15" relativePoint="BOTTOM"/>
+                        </Anchors>
+                    </Button>
+                    <Button name="DebugMessage17" inherits="DebugMessage_Template">
+                        <Anchors>
+                            <Anchor point="TOP" relativeTo="DebugMessage16" relativePoint="BOTTOM"/>
+                        </Anchors>
+                    </Button>
+                    <Button name="DebugMessage18" inherits="DebugMessage_Template">
+                        <Anchors>
+                            <Anchor point="TOP" relativeTo="DebugMessage17" relativePoint="BOTTOM"/>
+                        </Anchors>
+                    </Button>
+                    <Button name="DebugMessage19" inherits="DebugMessage_Template">
+                        <Anchors>
+                            <Anchor point="TOP" relativeTo="DebugMessage18" relativePoint="BOTTOM"/>
+                        </Anchors>
+                    </Button>
+                    <Button name="DebugMessage20" inherits="DebugMessage_Template">
+                        <Anchors>
+                            <Anchor point="TOP" relativeTo="DebugMessage19" relativePoint="BOTTOM"/>
+                        </Anchors>
+                    </Button>
+                    <Button name="DebugMessage21" inherits="DebugMessage_Template">
+                        <Anchors>
+                            <Anchor point="TOP" relativeTo="DebugMessage20" relativePoint="BOTTOM"/>
+                        </Anchors>
+                    </Button>
+                    <Button name="DebugMessage22" inherits="DebugMessage_Template">
+                        <Anchors>
+                            <Anchor point="TOP" relativeTo="DebugMessage21" relativePoint="BOTTOM"/>
+                        </Anchors>
+                    </Button>
+                    <Button name="DebugMessage23" inherits="DebugMessage_Template">
+                        <Anchors>
+                            <Anchor point="TOP" relativeTo="DebugMessage22" relativePoint="BOTTOM"/>
+                        </Anchors>
+                    </Button>
+                    <Button name="DebugMessage24" inherits="DebugMessage_Template">
+                        <Anchors>
+                            <Anchor point="TOP" relativeTo="DebugMessage23" relativePoint="BOTTOM"/>
+                        </Anchors>
+                    </Button>
+                    <Button name="DebugMessage25" inherits="DebugMessage_Template">
+                        <Anchors>
+                            <Anchor point="TOP" relativeTo="DebugMessage24" relativePoint="BOTTOM"/>
+                        </Anchors>
+                    </Button>
+                </Frames>
+            </Frame>
+
+            <!-- Scroll buttons -->
+            <ScrollFrame name="DebugMessages_ScrollFrame" inherits="FauxScrollFrameTemplate" enableMouse="true">
+                <Size>
+                    <AbsDimension x="16" y="300"/>
+                </Size>
+                <Anchors>
+                    <Anchor point="TOPRIGHT" relativeTo="$parentBorder" relativePoint="TOPRIGHT">
+                        <Offset><AbsDimension x="-28" y="-6"/></Offset>
+                    </Anchor>
+                </Anchors>
+                <Scripts>
+                    <OnVerticalScroll>
+                        FauxScrollFrame_OnVerticalScroll( self, offset, 30, DebugMessages_Scroll );
+                    </OnVerticalScroll>
+                </Scripts>
+            </ScrollFrame>
+
+            <!-- Close button -->
+            <Button name="$parentCloseButton" inherits="UIPanelButtonTemplate" text="DM_CLOSE">
+                <Size>
+                    <AbsDimension x="100" y="21"/>
+                </Size>
+                <Anchors>
+                    <Anchor point="BOTTOMRIGHT" relativeTo="$parent" relativePoint="BOTTOMRIGHT">
+                        <Offset><AbsDimension x="-15" y="13"/></Offset>
+                    </Anchor>
+                </Anchors>
+                <Scripts>
+                    <OnClick function="DebugMessages_Toggle" />
+                </Scripts>
+            </Button>
+
+            <!-- Purge button -->
+            <Button name="$parentPurgeButton" inherits="UIPanelButtonTemplate" text="DM_PURGE">
+                <Size>
+                    <AbsDimension x="100" y="21"/>
+                </Size>
+                <Anchors>
+                    <Anchor point="TOPRIGHT" relativeTo="$parentCloseButton" relativePoint="TOPLEFT">
+                        <Offset><AbsDimension x="0" y="0"/></Offset>
+                    </Anchor>
+                </Anchors>
+                <Scripts>
+                    <OnClick function="DebugMessages_Purge" />
+                </Scripts>
+            </Button>
+
+            <!-- Scroll to Bottom checkbox -->
+            <CheckButton name="ScrollState" inherits="UICheckButtonTemplate" text="Hoi">
+                <Size>
+                    <AbsDimension x="24" y="24"/>
+                </Size>
+                <Anchors>
+                    <Anchor point="BOTTOMLEFT" relativeTo="$parent" relativePoint="BOTTOMLEFT">
+                        <Offset><AbsDimension x="15" y="13"/></Offset>
+                    </Anchor>
+                </Anchors>
+                <Scripts>
+                    <OnShow>
+                        self:SetChecked( DM_Config.scrollstate );
+                        _G[ self:GetName() .. "Text" ]:SetText( DM_SCROLLTOLAST );
+                        _G[ self:GetName() .. "Text" ]:ClearAllPoints();
+                        _G[ self:GetName() .. "Text" ]:SetPoint( "LEFT", self, "RIGHT", 0, 0 );
+                    </OnShow>
+                    <OnClick function="DebugMessages_ScrollState" />
+                </Scripts>
+            </CheckButton>
+
+        </Frames>
+        <Scripts>
+            <OnLoad>
+                tinsert( UISpecialFrames, self:GetName() );
+            </OnLoad>
+            <OnShow function="DebugMessages_Scroll" />
+        </Scripts>
+    </Frame>
+
+</Ui>

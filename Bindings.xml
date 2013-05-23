@@ -1,0 +1,8 @@
+<!--
+  Revision: $Id: Bindings.xml 772 2013-02-05 15:32:54Z fmeus_lgs $
+-->
+<Bindings>
+    <Binding name="TOGGLE" header="DM">
+        DebugMessages_Toggle();
+    </Binding>
+</Bindings>
