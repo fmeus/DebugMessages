@@ -1,8 +1,3 @@
---[[ =================================================================
-    Revision:
-        $Id: DebugMessages_locale.lua 772 2013-02-05 15:32:54Z fmeus_lgs $
-    ================================================================= --]]
-
 -- Version information (not localized)
     DM_NAME = GetAddOnMetadata( "DebugMessages", "Title" );
     DM_VERSION = GetAddOnMetadata( "DebugMessages", "Version" );
