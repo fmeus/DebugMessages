@@ -1,6 +1,6 @@
-## Interface: 50300
+## Interface: 50400
 ## Title: DebugMessages
-## Version: 1.0
+## Version: 1.1
 ## Author: fmeus
 ## Notes: Provides a safe haven for all you debug messages
 ## DefaultState: enabled
