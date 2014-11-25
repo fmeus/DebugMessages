@@ -9,7 +9,6 @@
     DM_MESSAGE = "Message";
     DM_CLOSE = "Close";
     DM_PURGE = "Purge";
-    DM_SCROLLTOLAST = "Scroll to Last";
 
 -- Binding strings
     BINDING_HEADER_DM = "DebugMessages Bindings";

@@ -21,20 +21,12 @@
 -- Create AddOn frame
     local DebugMessages = CreateFrame( "Frame", "DebugMessages", UIParent );
 
--- Initialize settings
-    if ( not DM_Config ) then DM_Config = {}; end;
-    if ( not DM_Config.scrollstate ) then DM_Config.scrollstate = true; end;
-
 -- Add message to the debug messages stack (External API)
     function DebugMessages:AddMessage( addon, message )
         tinsert( DM_MSG, { time(), addon, message } );
         
-        -- Force scroll to last message or perform a regular refresh
-        if ( DM_Config.scrollstate ) then
-            FauxScrollFrame_SetOffset( DebugMessages_ScrollFrame, DebugMessages_ScrollFrame:GetVerticalScrollRange() );
-        else
-            DebugMessages_Scroll();
-        end;
+        -- Update the UI
+        DebugMessages_Scroll();
     end;
 
 -- Mark Odd/Even lines
@@ -94,9 +86,4 @@
         else
             DebugMessagesFrame:Show();
         end;
-    end;
-
--- Toggle 'Scroll to Last' state
-    function DebugMessages_ScrollState()
-        DM_Config.scrollstate = ScrollState:GetChecked();
     end;

@@ -377,27 +377,6 @@
                 </Scripts>
             </Button>
 
-            <!-- Scroll to Bottom checkbox -->
-            <CheckButton name="ScrollState" inherits="UICheckButtonTemplate" text="Hoi">
-                <Size>
-                    <AbsDimension x="24" y="24"/>
-                </Size>
-                <Anchors>
-                    <Anchor point="BOTTOMLEFT" relativeTo="$parent" relativePoint="BOTTOMLEFT">
-                        <Offset><AbsDimension x="15" y="13"/></Offset>
-                    </Anchor>
-                </Anchors>
-                <Scripts>
-                    <OnShow>
-                        self:SetChecked( DM_Config.scrollstate );
-                        _G[ self:GetName() .. "Text" ]:SetText( DM_SCROLLTOLAST );
-                        _G[ self:GetName() .. "Text" ]:ClearAllPoints();
-                        _G[ self:GetName() .. "Text" ]:SetPoint( "LEFT", self, "RIGHT", 0, 0 );
-                    </OnShow>
-                    <OnClick function="DebugMessages_ScrollState" />
-                </Scripts>
-            </CheckButton>
-
         </Frames>
         <Scripts>
             <OnLoad>
