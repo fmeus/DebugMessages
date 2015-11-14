@@ -1,6 +1,6 @@
-## Interface: 60000
+## Interface: 60200
 ## Title: DebugMessages
-## Version: 1.2
+## Version: 1.3
 ## Author: fmeus
 ## Notes: Provides a safe haven for all you debug messages
 ## DefaultState: enabled
