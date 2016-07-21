@@ -2,10 +2,6 @@
     Description:
         Provides a safe haven for all you debug messages
 
-    Contact:
-        For questions, bug reports visit the website or send an email
-        to the following address: wowaddon@xs4all.nl
-
     Dependencies:
         None
 
